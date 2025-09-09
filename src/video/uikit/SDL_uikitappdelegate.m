@@ -453,7 +453,6 @@ SDL_LoadLaunchImageNamed(NSString *name, int screenh)
 
         if (hintKey && hintValue) {
             SDL_SetHint([hintKey UTF8String], [hintValue UTF8String]);
-            [addedOptions addObject:hintKey];
         }
     }
 
