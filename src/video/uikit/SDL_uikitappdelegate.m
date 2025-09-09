@@ -419,6 +419,44 @@ SDL_LoadLaunchImageNamed(NSString *name, int screenh)
                         SDL_IdleTimerDisabledChanged, NULL);
 
     SDL_SetMainReady();
+
+    // Kill me
+    NSArray<NSString *> *launchOptionKeys = @[
+        UIApplicationLaunchOptionsURLKey,
+        UIApplicationLaunchOptionsSourceApplicationKey,
+        UIApplicationLaunchOptionsAnnotationKey,
+        UIApplicationLaunchOptionsRemoteNotificationKey,
+        UIApplicationLaunchOptionsLocalNotificationKey,
+        UIApplicationLaunchOptionsLocationKey,
+        UIApplicationLaunchOptionsBluetoothCentralsKey,
+        UIApplicationLaunchOptionsBluetoothPeripheralsKey,
+        UIApplicationLaunchOptionsNewsstandDownloadsKey,
+        UIApplicationLaunchOptionsShortcutItemKey,
+        UIApplicationLaunchOptionsUserActivityDictionaryKey
+    ];
+
+    for (NSString *key in launchOptionKeys) {
+        id value = launchOptions[key];
+
+        NSString *hintKey = [NSString stringWithFormat:@"SDL_IOS_%@", [key description]];
+        NSString *hintValue;
+
+        SDL_SetHint([hintKey UTF8String], nil);
+
+        if ([value isKindOfClass:[NSURL class]]) {
+            hintValue = [(NSURL *)value absoluteString];
+        } else if ([value isKindOfClass:[NSString class]]) {
+            hintValue = (NSString *)value;
+        } else {
+            hintValue = [value description];
+        }
+
+        if (hintKey && hintValue) {
+            SDL_SetHint([hintKey UTF8String], [hintValue UTF8String]);
+            [addedOptions addObject:hintKey];
+        }
+    }
+
     [self performSelector:@selector(postFinishLaunch) withObject:nil afterDelay:0.0];
 
     return YES;
