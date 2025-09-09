@@ -535,6 +535,11 @@ SDL_LoadLaunchImageNamed(NSString *name, int screenh)
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
 {
     /* TODO: Handle options */
+
+    if (url) {
+        SDL_SetHint("SDL_IOS_UIApplicationLaunchOptionsURLKey", [[url absoluteString] UTF8String]);
+    }
+
     [self sendDropFileForURL:url];
     return YES;
 }
@@ -543,6 +548,10 @@ SDL_LoadLaunchImageNamed(NSString *name, int screenh)
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+    if (url) {
+        SDL_SetHint("SDL_IOS_UIApplicationLaunchOptionsURLKey", [[url absoluteString] UTF8String]);
+    }
+
     [self sendDropFileForURL:url];
     return YES;
 }
