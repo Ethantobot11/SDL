@@ -253,7 +253,7 @@ SDL_HideHomeIndicatorHintChanged(void *userdata, const char *name, const char *o
         return UIRectEdgeNone;
     }
     */
-    return UIRectEdgeAll;
+    return UIRectEdgeDown;
 }
 
 - (BOOL)prefersPointerLocked
