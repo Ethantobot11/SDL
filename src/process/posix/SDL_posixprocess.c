@@ -20,6 +20,11 @@
 */
 #include "SDL_internal.h"
 
+#if defined(__ANDROID__) && __ANDROID_API__ < 28
+#undef SDL_PROCESS_POSIX
+#define SDL_PROCESS_DISABLED 1
+#endif
+
 #ifdef SDL_PROCESS_POSIX
 
 #include <dirent.h>
