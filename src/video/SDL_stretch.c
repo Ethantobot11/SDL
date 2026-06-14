@@ -18,6 +18,11 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
+
+#ifdef __clang__
+#pragma clang optimize off
+#endif
+
 #include "../SDL_internal.h"
 
 #include "SDL_video.h"
